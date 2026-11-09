@@ -39,7 +39,7 @@ You need a Mac with Xcode installed.
 
 1. Clone the repo:
    ```
-   git clone <REPO_URL>
+   git clone https://github.com/ELS20680/GarageBook.git
    ```
 2. Open `GarageBook/GarageBook.xcodeproj` in Xcode.
 3. Pick an iPhone simulator and press Run (⌘R).
