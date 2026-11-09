@@ -2,60 +2,32 @@
 //  ContentView.swift
 //  GarageBook
 //
-//  Created by Elias Larhdaf on 2026-11-08.
+//  Temporary placeholder so the app runs on the new models.
+//  It will be replaced by the real navigation (feature/app-navigation).
 //
 
 import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query(sort: \Vehicle.name) private var vehicles: [Vehicle]
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+        NavigationStack {
+            List(vehicles) { vehicle in
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(vehicle.name).font(.headline)
+                    Text(vehicle.fullName).font(.subheadline).foregroundStyle(.secondary)
+                    Text("\(vehicle.serviceRecords.count) records · \(vehicle.totalSpent, format: .currency(code: "CAD")) spent")
+                        .font(.caption)
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+            .navigationTitle("GarageBook")
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(SampleData.previewContainer)
 }
