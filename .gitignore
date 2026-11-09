@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Secrets — NEVER commit API keys
+Secrets.xcconfig
+Secrets.plist
+*.env
+.env
+
+# Course instructions (keep local)
+*.pdf
+
+# Private team planning notes (not part of the project)
+team-notes/
