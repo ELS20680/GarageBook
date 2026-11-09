@@ -2,28 +2,18 @@
 //  ContentView.swift
 //  GarageBook
 //
-//  Temporary placeholder so the app runs on the new models.
-//  It will be replaced by the real navigation (feature/app-navigation).
+//  Root view. For now it shows the vehicle list; the final tab navigation
+//  (feature/app-navigation) will replace this.
 //
 
 import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Query(sort: \Vehicle.name) private var vehicles: [Vehicle]
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-        NavigationStack {
-            List(vehicles) { vehicle in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(vehicle.name).font(.headline)
-                    Text(vehicle.fullName).font(.subheadline).foregroundStyle(.secondary)
-                    Text("\(vehicle.serviceRecords.count) records · \(vehicle.totalSpent, format: .currency(code: "CAD")) spent")
-                        .font(.caption)
-                }
-            }
-            .navigationTitle("GarageBook")
-        }
+        VehicleListView(context: modelContext)
     }
 }
 
